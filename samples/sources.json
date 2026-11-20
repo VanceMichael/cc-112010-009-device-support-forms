@@ -495,6 +495,88 @@
         },
         "request": null,
         "headers": {}
+      },
+      {
+        "method": "POST",
+        "path": "/precheck",
+        "status": 200,
+        "request": {
+          "business": "H-16",
+          "revision": 4,
+          "items": [
+            {
+              "serial": "P-42",
+              "contract": "S-5",
+              "action": "临借上门"
+            }
+          ]
+        },
+        "body": {
+          "ticket": "P-104",
+          "version": 4,
+          "items": [
+            {
+              "serial": "P-42",
+              "valid": true
+            }
+          ]
+        },
+        "headers": {}
+      },
+      {
+        "method": "POST",
+        "path": "/registration",
+        "status": 200,
+        "request": {
+          "ticket": "P-104",
+          "revision": 4
+        },
+        "body": {
+          "state": "已确认",
+          "business": "H-16",
+          "scope": [
+            "P-42"
+          ]
+        },
+        "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/receipt?business=H-16",
+        "status": 200,
+        "request": null,
+        "body": {
+          "statements": [
+            {
+              "id": "RR-17",
+              "business": "H-16",
+              "revision": 1,
+              "serial": "P-40",
+              "contract": "S-5",
+              "owner": "设备代办",
+              "status": "撤回确认"
+            },
+            {
+              "id": "RR-33",
+              "business": "H-16",
+              "revision": 2,
+              "serial": "NS-19",
+              "contract": "S-8",
+              "owner": "现场技术员",
+              "status": "已确认"
+            },
+            {
+              "id": "RR-48",
+              "business": "H-16",
+              "revision": 4,
+              "serial": "P-42",
+              "contract": "S-5",
+              "owner": "设备代办",
+              "status": "已确认"
+            }
+          ]
+        },
+        "headers": {}
       }
     ]
   ],
