@@ -1,0 +1,322 @@
+{
+  "rounds": [
+    [
+      {
+        "path": "/handover",
+        "body": {
+          "ref": "H-16",
+          "version": 1,
+          "from": "检查三室",
+          "target": "检查二室",
+          "loanUntil": "2026-11-28",
+          "original": "NS-03",
+          "loaner": "NS-19",
+          "items": [
+            {
+              "serial": "P-40",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": true
+            },
+            {
+              "serial": "P-41",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": false
+            }
+          ],
+          "state": "原机停用待归还"
+        },
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/service",
+        "body": [
+          {
+            "contract": "S-5",
+            "serial": "NS-03",
+            "parts": [
+              "P-40",
+              "P-41"
+            ],
+            "from": "2026-01-01",
+            "through": "2027-01-01",
+            "sharedUntil": "2026-11-28",
+            "sharedServices": [
+              "上门"
+            ]
+          },
+          {
+            "contract": "S-8",
+            "serial": "NS-19",
+            "parts": [
+              "P-45"
+            ],
+            "from": "2026-01-01",
+            "through": "2027-01-01",
+            "sharedServices": []
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/orders",
+        "body": [
+          {
+            "id": "E-5",
+            "serial": "P-41",
+            "host": "NS-03",
+            "status": "待检修"
+          },
+          {
+            "id": "E-8",
+            "serial": "NS-19",
+            "status": "已关闭"
+          }
+        ],
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/receipt?business=H-16",
+        "body": {
+          "statements": []
+        },
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/precheck",
+        "body": {
+          "ticket": "P-100",
+          "version": 1,
+          "items": [
+            {
+              "serial": "P-40",
+              "valid": true
+            }
+          ]
+        },
+        "status": 200,
+        "method": "POST",
+        "request": {
+          "business": "H-16",
+          "revision": 1,
+          "items": [
+            {
+              "serial": "P-40",
+              "contract": "S-5",
+              "action": "临借上门"
+            }
+          ]
+        },
+        "headers": {}
+      },
+      {
+        "path": "/registration",
+        "body": {
+          "state": "回执查询中",
+          "business": "H-16"
+        },
+        "status": 503,
+        "method": "POST",
+        "request": {
+          "ticket": "P-100",
+          "revision": 1
+        },
+        "headers": {}
+      }
+    ],
+    [
+      {
+        "path": "/receipt?business=H-16",
+        "body": {
+          "statements": [
+            {
+              "id": "RR-17",
+              "business": "H-16",
+              "revision": 1,
+              "serial": "P-40",
+              "contract": "S-5",
+              "owner": "设备代办",
+              "status": "已确认"
+            },
+            {
+              "id": "RR-33",
+              "business": "H-16",
+              "revision": 2,
+              "serial": "NS-19",
+              "contract": "S-8",
+              "owner": "现场技术员",
+              "status": "已确认"
+            }
+          ]
+        },
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/handover",
+        "body": {
+          "ref": "H-16",
+          "version": 2,
+          "from": "检查三室",
+          "target": "检查二室",
+          "loanUntil": "2026-11-28",
+          "original": "NS-03",
+          "loaner": "NS-19",
+          "items": [
+            {
+              "serial": "P-40",
+              "from": "NS-03",
+              "to": "NS-03",
+              "approved": true
+            },
+            {
+              "serial": "P-41",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": false
+            }
+          ],
+          "state": "原机停用待归还"
+        },
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/precheck",
+        "body": {
+          "items": [
+            {
+              "serial": "P-41",
+              "valid": false,
+              "need": "交接授权"
+            }
+          ]
+        },
+        "status": 422,
+        "method": "POST",
+        "request": {
+          "business": "H-16",
+          "revision": 2,
+          "items": [
+            {
+              "serial": "P-41",
+              "contract": "S-5",
+              "action": "临借上门"
+            }
+          ]
+        },
+        "headers": {}
+      },
+      {
+        "path": "/registration",
+        "body": {
+          "state": "修订冲突",
+          "business": "H-16",
+          "currentRevision": 2
+        },
+        "status": 409,
+        "method": "POST",
+        "request": {
+          "ticket": "P-100",
+          "revision": 1
+        },
+        "headers": {}
+      }
+    ],
+    [
+      {
+        "path": "/receipt?business=H-16",
+        "body": {
+          "statements": [
+            {
+              "id": "RR-17",
+              "business": "H-16",
+              "revision": 1,
+              "serial": "P-40",
+              "contract": "S-5",
+              "owner": "设备代办",
+              "status": "撤回确认"
+            },
+            {
+              "id": "RR-33",
+              "business": "H-16",
+              "revision": 2,
+              "serial": "NS-19",
+              "contract": "S-8",
+              "owner": "现场技术员",
+              "status": "已确认"
+            }
+          ]
+        },
+        "status": 200,
+        "method": "GET",
+        "request": null,
+        "headers": {}
+      },
+      {
+        "path": "/precheck",
+        "body": {
+          "ticket": "P-103",
+          "version": 2,
+          "items": [
+            {
+              "serial": "P-40",
+              "valid": true
+            }
+          ]
+        },
+        "status": 200,
+        "method": "POST",
+        "request": {
+          "business": "H-16",
+          "revision": 2,
+          "items": [
+            {
+              "serial": "P-40",
+              "contract": "S-5",
+              "action": "撤回临借"
+            }
+          ]
+        },
+        "headers": {}
+      },
+      {
+        "path": "/registration",
+        "body": {
+          "state": "撤回确认",
+          "business": "H-16",
+          "scope": [
+            "P-40"
+          ]
+        },
+        "status": 200,
+        "method": "POST",
+        "request": {
+          "ticket": "P-103",
+          "revision": 2,
+          "replaces": "RR-17",
+          "receiptRevision": 1
+        },
+        "headers": {}
+      }
+    ]
+  ],
+  "assets": {}
+}
