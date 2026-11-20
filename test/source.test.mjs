@@ -84,5 +84,16 @@ test('随访完结和附件授权独立发布，现场登记继续可核对', as
   const book = await read('/receipt?business=H-16')
   assert.equal(book.statements.find(row => row.id === 'RR-33').status, '已确认')
   await view(origin, 3)
-  assert.equal((await read('/handover')).items.find(row => row.serial === 'P-42').approved, true)
+  const latest = await read('/handover')
+  assert.equal(latest.items.find(row => row.serial === 'P-42').approved, true)
+  const post = (path, body) => request(origin, path, {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body),
+  })
+  const check = await post('/precheck', { business: latest.ref, revision: latest.version,
+    items: [{ serial: 'P-42', contract: 'S-5', action: '临借上门' }],
+  })
+  const { ticket } = await check.json()
+  const registration = await post('/registration', { ticket, revision: latest.version })
+  assert.equal(registration.status, 200)
+  assert.equal((await read('/receipt?business=H-16')).statements.find(row => row.id === 'RR-48').serial, 'P-42')
 })
