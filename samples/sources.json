@@ -23,6 +23,12 @@
               "from": "NS-03",
               "to": "NS-19",
               "approved": false
+            },
+            {
+              "serial": "P-42",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": true
             }
           ],
           "state": "原机停用待归还"
@@ -40,14 +46,16 @@
             "serial": "NS-03",
             "parts": [
               "P-40",
-              "P-41"
+              "P-41",
+              "P-42"
             ],
             "from": "2026-01-01",
             "through": "2027-01-01",
             "sharedUntil": "2026-11-28",
             "sharedServices": [
               "上门"
-            ]
+            ],
+            "servicePool": "visit-core"
           },
           {
             "contract": "S-8",
@@ -57,7 +65,8 @@
             ],
             "from": "2026-01-01",
             "through": "2027-01-01",
-            "sharedServices": []
+            "sharedServices": [],
+            "servicePool": "visit-loaner"
           }
         ],
         "status": 200,
@@ -135,6 +144,28 @@
           "revision": 1
         },
         "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/visit-capacity",
+        "status": 200,
+        "body": {
+          "pools": [
+            {
+              "pool": "visit-core",
+              "limit": 1,
+              "coveredContract": "S-5"
+            },
+            {
+              "pool": "visit-loaner",
+              "limit": 1,
+              "coveredContract": "S-8"
+            }
+          ],
+          "reservations": []
+        },
+        "request": null,
+        "headers": {}
       }
     ],
     [
@@ -189,6 +220,12 @@
               "from": "NS-03",
               "to": "NS-19",
               "approved": false
+            },
+            {
+              "serial": "P-42",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": true
             }
           ],
           "state": "原机停用待归还"
@@ -238,6 +275,39 @@
           "revision": 1
         },
         "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/visit-capacity",
+        "status": 200,
+        "body": {
+          "pools": [
+            {
+              "pool": "visit-core",
+              "limit": 1,
+              "coveredContract": "S-5"
+            },
+            {
+              "pool": "visit-loaner",
+              "limit": 1,
+              "coveredContract": "S-8"
+            }
+          ],
+          "reservations": [
+            {
+              "id": "V-12",
+              "serial": "NS-03",
+              "contract": "S-5",
+              "owner": "现场技术员",
+              "pool": "visit-core",
+              "status": "confirmed",
+              "from": "2026-11-25T13:00:00+08:00",
+              "to": "2026-11-25T14:00:00+08:00"
+            }
+          ]
+        },
+        "request": null,
+        "headers": {}
       }
     ],
     [
@@ -274,7 +344,7 @@
         "path": "/precheck",
         "body": {
           "ticket": "P-103",
-          "version": 2,
+          "version": 3,
           "items": [
             {
               "serial": "P-40",
@@ -286,7 +356,7 @@
         "method": "POST",
         "request": {
           "business": "H-16",
-          "revision": 2,
+          "revision": 3,
           "items": [
             {
               "serial": "P-40",
@@ -310,10 +380,120 @@
         "method": "POST",
         "request": {
           "ticket": "P-103",
-          "revision": 2,
+          "revision": 3,
           "replaces": "RR-17",
           "receiptRevision": 1
         },
+        "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/visit-capacity",
+        "status": 200,
+        "body": {
+          "pools": [
+            {
+              "pool": "visit-core",
+              "limit": 1,
+              "coveredContract": "S-5"
+            },
+            {
+              "pool": "visit-loaner",
+              "limit": 1,
+              "coveredContract": "S-8"
+            }
+          ],
+          "reservations": [
+            {
+              "id": "V-12",
+              "serial": "NS-03",
+              "contract": "S-5",
+              "owner": "现场技术员",
+              "pool": "visit-core",
+              "status": "completed",
+              "from": "2026-11-25T13:00:00+08:00",
+              "to": "2026-11-25T14:00:00+08:00",
+              "receipt": "Z-12"
+            }
+          ]
+        },
+        "request": null,
+        "headers": {}
+      },
+      {
+        "method": "GET",
+        "path": "/handover",
+        "status": 200,
+        "body": {
+          "ref": "H-16",
+          "version": 3,
+          "from": "检查三室",
+          "target": "检查二室",
+          "loanUntil": "2026-11-28",
+          "original": "NS-03",
+          "loaner": "NS-19",
+          "items": [
+            {
+              "serial": "P-40",
+              "from": "NS-03",
+              "to": "NS-03",
+              "approved": true
+            },
+            {
+              "serial": "P-41",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": false
+            },
+            {
+              "serial": "P-42",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": false
+            }
+          ],
+          "state": "原机停用待归还"
+        },
+        "request": null,
+        "headers": {}
+      }
+    ],
+    [
+      {
+        "method": "GET",
+        "path": "/handover",
+        "status": 200,
+        "body": {
+          "ref": "H-16",
+          "version": 4,
+          "from": "检查三室",
+          "target": "检查二室",
+          "loanUntil": "2026-11-28",
+          "original": "NS-03",
+          "loaner": "NS-19",
+          "items": [
+            {
+              "serial": "P-40",
+              "from": "NS-03",
+              "to": "NS-03",
+              "approved": true
+            },
+            {
+              "serial": "P-41",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": false
+            },
+            {
+              "serial": "P-42",
+              "from": "NS-03",
+              "to": "NS-19",
+              "approved": true
+            }
+          ],
+          "state": "原机停用待归还"
+        },
+        "request": null,
         "headers": {}
       }
     ]

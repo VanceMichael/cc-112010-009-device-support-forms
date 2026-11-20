@@ -32,7 +32,7 @@ async function view(origin, step) {
 test('逐次发布可从资料源取回', async t => {
   const origin = await openSource(t)
   const ready = await request(origin, '/ready')
-  assert.deepEqual(await ready.json(), { status: 'ready', step: 0, steps: entries.length })
+  assert.deepEqual(await ready.json(), { status: 'ready', step: 0, steps: release.rounds.length })
   for (const [step, routes] of entries.entries()) {
     await view(origin, step)
     for (const entry of release.rounds[step].filter(row => routes.includes(row.path))) {
@@ -65,4 +65,24 @@ test('二进制资料摘要和传输范围一致', { skip: !Object.keys(release.
     assert.equal(partial.headers.get('content-range'), 'bytes 0-7/' + bytes.length)
     assert.deepEqual(Buffer.from(await partial.arrayBuffer()), bytes.subarray(0, 8))
   }
+})
+
+test('随访完结和附件授权独立发布，现场登记继续可核对', async t => {
+  const origin = await openSource(t)
+  const read = async path => (await request(origin, path)).json()
+  await view(origin, 1)
+  const pending = await read('/visit-capacity')
+  const contract = (await read('/service')).find(row => row.contract === 'S-5')
+  const held = pending.reservations.find(row => row.pool === contract.servicePool)
+  assert.equal(held.status, 'confirmed')
+  assert.equal(held.serial, 'NS-03')
+  assert.equal((await read('/handover')).items.find(row => row.serial === 'P-42').approved, true)
+  await view(origin, 2)
+  const completed = (await read('/visit-capacity')).reservations.find(row => row.id === held.id)
+  assert.equal(completed.status, 'completed')
+  assert.equal((await read('/handover')).items.find(row => row.serial === 'P-42').approved, false)
+  const book = await read('/receipt?business=H-16')
+  assert.equal(book.statements.find(row => row.id === 'RR-33').status, '已确认')
+  await view(origin, 3)
+  assert.equal((await read('/handover')).items.find(row => row.serial === 'P-42').approved, true)
 })

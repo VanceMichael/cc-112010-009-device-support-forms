@@ -8,4 +8,6 @@
 
 /handover 由设备员登记，from 为原科室，loanUntil 为空表示归还时间待定。附件可单独留置，授权的操作见 approved。/service 展示合约及附件许可，工单列表中的 serial 指送修对象。POST /precheck 接收 business、revision、items，每行提供 serial、contract、action。POST /registration 使用预检给出的同版本票据。/receipt 按业务标识查询门户当前确认行及所有人。 更正已登记记录时提交替代票据，并指定 replaces（原回执号）与 receiptRevision（原回执版本）；门户会拒绝已被其他经办人修改的回执。
 
+厂商 /visit-capacity 公布每项服务各自的名额池。confirmed 是尚在使用的现场预约，completed 是收到完结回条后的事实。厂商的名额占用按 pool，而不是按主机型号。
+
 运行 `npm test` 可校验资料源实际应答。样本内容存放在 `samples/`，开发时通过各来源的本地地址进行联调。
