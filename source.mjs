@@ -70,7 +70,7 @@ export function makeSource() {
   return createServer(async (req, res) => {
     try {
       const url = new URL(req.url, 'http://127.0.0.1')
-      if (req.method === 'GET' && url.pathname === '/ready') {
+      if (req.method === 'GET' && ['/ready', '/health'].includes(url.pathname)) {
         return send(res, 200, { status: 'ready', step, steps: replay.rounds.length })
       }
       if (req.method === 'PUT' && url.pathname === '/replay') {
