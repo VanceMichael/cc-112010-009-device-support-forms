@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "node serve.mjs",
-    "test": "node --test"
+    "test": "node --test",
+    "collect": "node bin/collect.mjs"
   }
 }
